@@ -1,25 +1,45 @@
-/* Assessment Test 1 */
+/* Assessment Test 3 */
 
-/* 1. Return the customer IDs of customers who have spent at least $110 with the staff member who has an ID of 2.
-The answer should be customers 187 and 148. */
-SELECT customer_id, SUM(amount)
-FROM payment
-WHERE staff_id = 2
-GROUP BY customer_id
-HAVING SUM(amount) >= 110;
+/* Complete the following task:
+Create a new database called "School" this database should have two tables: teachers and students.
+The students table should have columns for student_id, first_name,last_name, homeroom_number, phone,email, and graduation year.
+The teachers table should have columns for teacher_id, first_name, last_name, homeroom_number, department, email, and phone.
 
-/* 2. How many films begin with the letter J?
-The answer should be 20. */
-SELECT COUNT(*)
-FROM film
-WHERE title LIKE 'J%';
+The constraints are mostly up to you, but your table constraints do have to consider the following:
+We must have a phone number to contact students in case of an emergency.
+We must have ids as the primary key of the tables
+Phone numbers and emails must be unique to the individual. */
 
-/* 3. What customer has the highest customer ID number whose name starts with an 'E' and has an address ID lower than 500?
-The answer is Eddie Tomlin */
-SELECT first_name,last_name,MAX(customer_id)
-FROM customer
-WHERE first_name LIKE 'E%'
-GROUP BY first_name,last_name
-HAVING MAX(customer_id)<500
-ORDER BY MAX(customer_id) DESC
-LIMIT 1;
+CREATE TABLE student(
+	student_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	homeroom_number INTEGER NOT NULL,
+	phone VARCHAR(12) UNIQUE NOT NULL,
+	email VARCHAR(50) UNIQUE,
+	graduation_year INTEGER
+);
+
+CREATE TABLE teacher(
+	teacher_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	homeroom_number INTEGER,
+	departmen VARCHAR(50) NOT NULL,
+	email VARCHAR(50) UNIQUE,
+	phone VARCHAR(12) UNIQUE NOT NULL
+);
+
+/* Once you've made the tables, insert a student named Mark Watney (student_id=1) who has a phone number of 888-777 
+and doesn't have an email. He graduates in 2035 and has 5 as a homeroom number. */
+
+INSERT INTO students(first_name,last_name,homeroom_number,phone,graduation_year)
+VALUES
+('Mark','Watney',5,'888-777',2035);
+
+/* Then insert a teacher names Jonas Salk (teacher_id = 1) who as a homeroom number of 5 and is from the Biology department. 
+His contact info is: jsalk@school.org and a phone number of 777-555. */
+
+INSERT INTO teacher(first_name,last_name,homeroom_number,departmen,email,phone)
+VALUES
+('Jonas','Salk',5,'Biology','jsalk@school.org','777-555');
